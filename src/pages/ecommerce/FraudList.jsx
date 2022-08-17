@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
@@ -8,10 +8,21 @@ import ShopCards03 from '../../partials/ecommerce/ShopCards03';
 import ShopCards04 from '../../partials/ecommerce/ShopCards04';
 import ShopCards05 from '../../partials/ecommerce/ShopCards05';
 import ShopCards06 from '../../partials/ecommerce/ShopCards06';
+import axios from 'axios';
+import {getNFTs} from "../../services/FraudList";
 
 function FraudList() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [nfts, setNfts] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      setNfts(await getNFTs());
+    })()
+  }, []);
+
+  console.log(nfts);
 
   return (
     <div className="flex h-screen overflow-hidden">
