@@ -8,7 +8,6 @@ import ShopCards03 from '../../partials/ecommerce/ShopCards03';
 import ShopCards04 from '../../partials/ecommerce/ShopCards04';
 import ShopCards05 from '../../partials/ecommerce/ShopCards05';
 import ShopCards06 from '../../partials/ecommerce/ShopCards06';
-import axios from 'axios';
 import {getNFTs} from "../../services/FraudList";
 
 function FraudList() {
