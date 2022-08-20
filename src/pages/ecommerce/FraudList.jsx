@@ -86,15 +86,14 @@ function FraudList() {
 
               {/* Cards 1 (Video Courses) */}
               <div className="mt-8">
-                <h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Video Courses</h2>
+                {/*<h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Video Courses</h2>*/}
                 <div className="grid grid-cols-12 gap-6">
-                  <ShopCards01 />
+                  <ShopCards01 nfts={nfts} />
                 </div>
               </div>
 
               {/* Cards 2 (Digital Goods) */}
               <div className="mt-8">
-                <h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Digital Goods</h2>
                 <div className="grid grid-cols-12 gap-6">
                   <ShopCards02 />
                 </div>
@@ -102,7 +101,6 @@ function FraudList() {
 
               {/* Cards 3 (Online Events) */}
               <div className="mt-8">
-                <h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Online Events</h2>
                 <div className="grid grid-cols-12 gap-6">
                   <ShopCards03 />
                 </div>
@@ -110,7 +108,6 @@ function FraudList() {
 
               {/* Cards 4 (Crowdfunding) */}
               <div className="mt-8">
-                <h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Crowdfunding</h2>
                 <div className="grid grid-cols-12 gap-6">
                   <ShopCards04 />
                 </div>
@@ -118,7 +115,6 @@ function FraudList() {
 
               {/* Cards 5 (Popular Categories) */}
               <div className="mt-8">
-                <h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Popular Categories</h2>
                 <div className="grid grid-cols-12 gap-6">
                   <ShopCards05 />
                 </div>
