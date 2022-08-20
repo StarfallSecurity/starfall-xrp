@@ -91,7 +91,7 @@ function FraudList() {
                   <ShopCards01 nfts={nfts} />
                 </div>
               </div>
-              
+
 
             </div>
 
