@@ -4,7 +4,7 @@ const envs = {
   PRODUCTION: "PRODUCTION"
 };
 
-export const currentEnv = "LOCAL";
+export const currentEnv = "PRODUCTION";
 
 export const localUrl = "http://localhost:8000/"
 export const productionUrl = "http://starfall-backend.herokuapp.com/"
