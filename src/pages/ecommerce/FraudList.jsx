@@ -91,42 +91,7 @@ function FraudList() {
                   <ShopCards01 nfts={nfts} />
                 </div>
               </div>
-
-              {/* Cards 2 (Digital Goods) */}
-              <div className="mt-8">
-                <div className="grid grid-cols-12 gap-6">
-                  <ShopCards02 />
-                </div>
-              </div>
-
-              {/* Cards 3 (Online Events) */}
-              <div className="mt-8">
-                <div className="grid grid-cols-12 gap-6">
-                  <ShopCards03 />
-                </div>
-              </div>
-
-              {/* Cards 4 (Crowdfunding) */}
-              <div className="mt-8">
-                <div className="grid grid-cols-12 gap-6">
-                  <ShopCards04 />
-                </div>
-              </div>
-
-              {/* Cards 5 (Popular Categories) */}
-              <div className="mt-8">
-                <div className="grid grid-cols-12 gap-6">
-                  <ShopCards05 />
-                </div>
-              </div>
-
-              {/* Cards 6 (Trending Now) */}
-              <div className="mt-8">
-                <h2 className="text-xl leading-snug text-slate-800 font-bold mb-5">Trending Now</h2>
-                <div className="grid grid-cols-12 gap-6">
-                  <ShopCards06 />
-                </div>
-              </div>
+              
 
             </div>
 
