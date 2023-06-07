@@ -18,6 +18,7 @@ function FraudList() {
   useEffect(() => {
     (async () => {
       setNfts(await getNFTs());
+      
     })()
   }, []);
 
