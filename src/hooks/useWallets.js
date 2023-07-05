@@ -8,8 +8,10 @@ export const useWallets = () => {
   const pageSize = 10; // Define the number of items per page
 
   useEffect(() => {
-    const response = fetchWalletsData(currentPage, pageSize);
-    setData(response)
+    (async ()=>{
+      const response = await fetchWalletsData(currentPage, pageSize);
+      setData(response)
+    })()
   }, [currentPage]);
 
   return {
