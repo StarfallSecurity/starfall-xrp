@@ -19,11 +19,15 @@
     "react-transition-group": "^4.4.2"
   },
   "devDependencies": {
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^2.0.0",
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",
     "prettier": "^3.0.0",
     "tailwindcss": "^3.1.6",
+    "typescript": "^5.1.6",
     "vite": "^3.0.0"
   }
 }
