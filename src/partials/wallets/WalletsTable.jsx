@@ -7,42 +7,41 @@ import Image03 from '../../images/icon-03.svg';
 
 import { useWallets } from '../../hooks/useWallets';
 
-function WalletsTable({
-  selectedItems
-}) {
-  const {data} = useWallets()
+function WalletsTable({ selectedItems }) {
+  const { data } = useWallets();
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
-    setIsCheck(list.map(li => li.id));
+    setIsCheck(list.map((li) => li.id));
     if (selectAll) {
       setIsCheck([]);
     }
   };
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     const { id, checked } = e.target;
     setSelectAll(false);
     setIsCheck([...isCheck, id]);
     if (!checked) {
-      setIsCheck(isCheck.filter(item => item !== id));
+      setIsCheck(isCheck.filter((item) => item !== id));
     }
   };
 
   useEffect(() => {
     selectedItems(isCheck);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCheck]);
 
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
       <header className="px-5 py-4">
-        <h2 className="font-semibold text-slate-800">All Wallets <span className="text-slate-400 font-medium">{data?.length}</span></h2>
+        <h2 className="font-semibold text-slate-800">
+          All Wallets <span className="text-slate-400 font-medium">{data?.length}</span>
+        </h2>
       </header>
       <div>
-
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="table-auto w-full">
@@ -53,12 +52,14 @@ function WalletsTable({
                   <div className="flex items-center">
                     <label className="inline-flex">
                       <span className="sr-only">Select all</span>
-                      <input className="form-checkbox" type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+                      <input
+                        className="form-checkbox"
+                        type="checkbox"
+                        checked={selectAll}
+                        onChange={handleSelectAll}
+                      />
                     </label>
                   </div>
-                </th>
-                <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
-                  <span className="sr-only">Favourite</span>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Wallet Address</div>
@@ -82,26 +83,23 @@ function WalletsTable({
             </thead>
             {/* Table body */}
             <tbody className="text-sm divide-y divide-slate-200">
-              {
-                data?.map(wallet => {
-                  const {id, address, created, user} = wallet || {}
-                  return (
-                    <Wallet
-                      key={id}
-                      id={id}
-                      address={address?.hash}
-                      isBlackList={address?.is_blacklist}
-                      created={created}
-                      handleClick={handleClick}
-                      isChecked={isCheck.includes(id)}
-                      image={Image01}
-                    />
-                  )
-                })
-              }
+              {data?.map((wallet) => {
+                const { id, address, created, user } = wallet || {};
+                return (
+                  <Wallet
+                    key={id}
+                    id={id}
+                    address={address?.hash}
+                    isBlackList={address?.is_blacklist}
+                    created={created}
+                    handleClick={handleClick}
+                    isChecked={isCheck.includes(id)}
+                    image={Image01}
+                  />
+                );
+              })}
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
