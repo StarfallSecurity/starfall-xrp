@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { fetchWalletsData } from "../services/WalletsList";
+import { fetchWalletsData } from '../services/network/wallet';
 
 export const useWallets = () => {
   const [data, setData] = useState([]);
@@ -8,14 +8,14 @@ export const useWallets = () => {
   const pageSize = 10; // Define the number of items per page
 
   useEffect(() => {
-    (async ()=>{
+    (async () => {
       const response = await fetchWalletsData(currentPage, pageSize);
-      setData(response)
-    })()
+      setData(response);
+    })();
   }, [currentPage]);
 
   return {
     data,
-    setCurrentPage,
-  }
-}
+    setCurrentPage
+  };
+};
