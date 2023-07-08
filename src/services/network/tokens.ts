@@ -9,7 +9,7 @@ export const fetchAPITokens = async (page: number) => {
       }
     });
 
-    const { count, next, previous, results } = (response as any) || {};
+    const { count, next, previous, results } = (response?.data as any) || {};
 
     return results;
   } catch (error) {
