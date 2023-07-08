@@ -8,7 +8,6 @@ export const useWallets = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [count, setCount] = useState(0);
   const pageSize = 10; // Define the number of items per page
-  console.log('currentPage ', currentPage);
   useEffect(() => {
     (async () => {
       const response = await fetchWalletsData(currentPage, pageSize);

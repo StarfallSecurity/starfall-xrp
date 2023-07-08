@@ -7,7 +7,7 @@ import { useApiTokens } from '../hooks/useApiTokens';
 import ApiToken from '../partials/token/ApiToken';
 
 function ApiTokens() {
-  const { data } = useApiTokens();
+  const { data, createTokens, deleteTokens } = useApiTokens();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -31,7 +31,10 @@ function ApiTokens() {
 
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                <button
+                  onClick={() => createTokens()}
+                  className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+                >
                   <svg className="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                     <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                   </svg>
@@ -41,7 +44,9 @@ function ApiTokens() {
             </div>
             {data?.map((token) => {
               const { key, created, user } = token || {};
-              return <ApiToken key={key} token={key} created={created} />;
+              return (
+                <ApiToken key={key} token={key} created={created} deleteTokens={deleteTokens} />
+              );
             })}
           </div>
         </main>

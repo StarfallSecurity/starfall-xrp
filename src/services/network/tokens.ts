@@ -16,3 +16,23 @@ export const fetchAPITokens = async (page: number) => {
     console.error(error);
   }
 };
+
+export const createApiToken = async (user: number) => {
+  try {
+    const response = await instance.post(`${envUrl}api/tokens/`, { user });
+
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteApiToken = async (key: string) => {
+  try {
+    const response = await instance.delete(`${envUrl}api/tokens/${key}/`);
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
