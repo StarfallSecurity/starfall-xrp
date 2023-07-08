@@ -8,8 +8,11 @@ import WalletsTable from '../partials/wallets/WalletsTable';
 import DeleteButton from '../partials/actions/DeleteButton';
 import DateSelect from '../components/DateSelect';
 import { setAuthToken } from '../services/network/api';
+import PaginationClassic from '../components/PaginationClassic';
+import { useWallets } from '../hooks/useWallets';
 
 function Dashboard() {
+  const { data, pageSize, count, currentPage, setCurrentPage } = useWallets();
   setAuthToken();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -59,12 +62,18 @@ function Dashboard() {
             </div>
 
             {/* Table */}
-            <WalletsTable selectedItems={handleSelectedItems} />
+            <WalletsTable selectedItems={handleSelectedItems} data={data} />
 
             {/* Pagination */}
-            {/* <div className="mt-8">
-              <PaginationClassic />
-            </div> */}
+            <div className="mt-8">
+              <PaginationClassic
+                pageSize={pageSize}
+                fetchNextPage={() => setCurrentPage(currentPage + 1)}
+                fetchPreviousPage={() => setCurrentPage(currentPage - 1)}
+                currentPage={currentPage}
+                count={count}
+              />
+            </div>
           </div>
         </main>
       </div>

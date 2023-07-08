@@ -2,13 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Wallet from './WalletsTableItem';
 
 import Image01 from '../../images/icon-01.svg';
-import Image02 from '../../images/icon-02.svg';
-import Image03 from '../../images/icon-03.svg';
 
-import { useWallets } from '../../hooks/useWallets';
-
-function WalletsTable({ selectedItems }) {
-  const { data } = useWallets();
+function WalletsTable({ selectedItems, data }) {
   const [selectAll, setSelectAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
 

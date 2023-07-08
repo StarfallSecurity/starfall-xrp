@@ -15,7 +15,7 @@ export const removeAuthToken = (apiInstance = instance, token: string) => {
 
 instance.interceptors.response.use(
   (response) => {
-    return response.data;
+    return response;
   },
   (error) => {
     throw error;

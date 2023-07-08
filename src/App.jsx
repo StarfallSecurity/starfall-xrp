@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Routes,
-  Route,
-  useLocation
-} from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import './css/style.css';
 
@@ -75,16 +71,18 @@ import AvatarPage from './pages/component/AvatarPage';
 import TooltipPage from './pages/component/TooltipPage';
 import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
-import FraudList from "./pages/ecommerce/FraudList";
+import FraudList from './pages/ecommerce/FraudList';
+import ApiTokens from './pages/Tokens';
+import { setAuthToken } from './services/network/api';
 
 function App() {
-
+  setAuthToken();
   const location = useLocation();
 
   useEffect(() => {
-    document.querySelector('html').style.scrollBehavior = 'auto'
-    window.scroll({ top: 0 })
-    document.querySelector('html').style.scrollBehavior = ''
+    document.querySelector('html').style.scrollBehavior = 'auto';
+    window.scroll({ top: 0 });
+    document.querySelector('html').style.scrollBehavior = '';
   }, [location.pathname]); // triggered on route change
 
   return (
@@ -92,6 +90,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
         <Route path="/dashboard/analytics" element={<Analytics />} />
+        <Route path="/dashboard/api-tokens" element={<ApiTokens />} />
         <Route path="/dashboard/fintech" element={<Fintech />} />
         <Route path="/ecommerce/customers" element={<Customers />} />
         <Route path="/ecommerce/orders" element={<Orders />} />

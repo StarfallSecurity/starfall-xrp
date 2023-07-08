@@ -1,18 +1,17 @@
+import { WalletsResponse } from '../../types/wallets';
 import { envUrl } from '../../constants';
 import instance from './api';
 
 export const fetchWalletsData = async (page: number, pageSize: number) => {
   try {
-    const response = await instance.get(`${envUrl}api/address_lookups/`, {
+    const response = await instance.get<WalletsResponse>(`${envUrl}api/address_lookups/`, {
       params: {
         page: page,
         page_size: pageSize
       }
     });
 
-    const { count, next, previous, results } = (response as any) || {};
-
-    return results;
+    return response?.data;
   } catch (error) {
     console.error(error);
   }
@@ -20,8 +19,8 @@ export const fetchWalletsData = async (page: number, pageSize: number) => {
 
 export const fetchWalletPrediction = async (address: string) => {
   try {
-    const response = await instance.get(`${envUrl}api/final_predictions/${address}`);
-    return response;
+    const response = await instance.get(`${envUrl}api/final_predictions/${address}/`);
+    return response?.data;
   } catch (error) {
     console.error(error);
   }
