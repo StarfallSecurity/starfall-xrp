@@ -6,7 +6,7 @@ const instance = axios.create({
 });
 
 export const setAuthToken = (apiInstance = instance, token = import.meta.env.VITE_AUTH_TOKEN) => {
-  apiInstance.defaults.headers.common.Authorization = `Token ${token}`;
+  apiInstance.defaults.headers.common.Authorization = `Token d4c61ef5657782f17bd093856dba821b1d86b955`;
 };
 
 export const removeAuthToken = (apiInstance = instance, token: string) => {
