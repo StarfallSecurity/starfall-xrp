@@ -24,8 +24,10 @@ function WalletsTableItem(props) {
 
   const handleViewMore = async () => {
     setOpen(!open);
-    const response = await fetchWalletPrediction(address);
-    setPredictionData(response);
+    if (!open) {
+      const response = await fetchWalletPrediction(address);
+      setPredictionData(response);
+    }
   };
 
   return (
