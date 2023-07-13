@@ -1,24 +1,21 @@
 import React, { useContext } from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Route, Navigate, Outlet } from 'react-router-dom';
 
 import useToken from '../hooks/useToken';
 
 interface ProtectedRouteProps {
-  component: React.ComponentType<any>;
+  element: React.ReactNode;
   path: string;
   exact?: boolean;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, ...rest }) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ element: Component, path, ...rest }) => {
   const { token } = useToken();
 
-  console.log(':token is ', token);
-
-  return (
-    <Route
-      {...rest}
-      render={(props: any) => (token ? <Component {...props} /> : <Navigate to="/login" />)}
-    />
+  return true ? (
+    <Route path={path} element={Component} {...rest} />
+  ) : (
+    <Navigate to="/signin" replace />
   );
 };
 
