@@ -30,7 +30,6 @@ const Signin: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log('name ', name, value, e.target);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -80,7 +79,6 @@ const Signin: React.FC = () => {
   const { username, password, error, isLoading, isSubmitted } = formData;
   const hasUsernameError = !username && isSubmitted;
   const hasPasswordError = !password && isSubmitted;
-  console.log('hasError', hasUsernameError, hasPasswordError, username);
 
   return (
     <main className="bg-white">
