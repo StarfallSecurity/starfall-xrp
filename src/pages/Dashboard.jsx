@@ -35,7 +35,7 @@ function Dashboard() {
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">User Dashboard ✨</h1>
+                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Wallet Lookups ✨</h1>
               </div>
 
               {/* Right: Actions */}
