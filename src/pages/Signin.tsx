@@ -1,11 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import AuthImage from '../images/auth-image.jpg';
 import AuthDecoration from '../images/auth-decoration.png';
 import { loginUser } from '../services/network/auth';
 import useToken from '../hooks/useToken';
-import { validateUserDetails } from '../utils/Utils';
 import EyeOffIcon from '../images/eyeOff';
 import EyeIcon from '../images/eye';
 
@@ -18,6 +17,7 @@ interface LoginFormState {
 }
 
 const Signin: React.FC = () => {
+  const navigate = useNavigate();
   const { setToken } = useToken();
   const [formData, setFormData] = useState<LoginFormState>({
     username: '',
@@ -60,8 +60,9 @@ const Signin: React.FC = () => {
 
     try {
       const response = await loginUser({ username, password });
-      if (response) {
+      if (response?.token) {
         setToken(response.token);
+        navigate('/');
         setFormData((prevData) => ({
           ...prevData,
           isLoading: false

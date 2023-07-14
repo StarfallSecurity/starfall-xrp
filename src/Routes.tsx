@@ -73,13 +73,10 @@ import AccordionPage from './pages/component/AccordionPage';
 import IconsPage from './pages/component/IconsPage';
 import FraudList from './pages/ecommerce/FraudList';
 import ApiTokens from './pages/Tokens';
-import { setAuthToken } from './services/network/api';
-import useToken from './hooks/useToken';
 import ProtectedRoute from './navigation/ProtectedRoute';
+import PublicRoute from './navigation/PublicRoute';
 
-function Routes() {
-  setAuthToken();
-  const { token } = useToken();
+function AppRoutes() {
   const location = useLocation();
 
   useEffect(() => {
@@ -92,9 +89,13 @@ function Routes() {
   return (
     <>
       <Routes>
-        <Route path="/signin" element={<Signin />} />
-        <ProtectedRoute exact path="/" element={<Dashboard />} />
-        <ProtectedRoute path="/dashboard/api-tokens" element={<ApiTokens />} />
+        <Route path="signin" element={<PublicRoute />}>
+          <Route path="/signin" element={<Signin />} />
+        </Route>
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard/api-tokens" element={<ApiTokens />} />
+        </Route>
         {/* <Route path="/dashboard/analytics" element={<Analytics />} />
           <Route path="/dashboard/fintech" element={<Fintech />} />
           <Route path="/ecommerce/customers" element={<Customers />} />
@@ -165,4 +166,4 @@ function Routes() {
   );
 }
 
-export default Routes;
+export default AppRoutes;

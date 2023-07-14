@@ -3,9 +3,9 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import useToken from '../hooks/useToken';
 
-const ProtectedRoute: React.FC = () => {
+const PublicRoute: React.FC = () => {
   const { token } = useToken();
-  return token ? <Outlet /> : <Navigate to="/signin" replace />;
+  return token ? <Navigate to="/" replace /> : <Outlet />;
 };
 
-export default ProtectedRoute;
+export default PublicRoute;
