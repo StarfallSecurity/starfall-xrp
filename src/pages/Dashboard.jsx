@@ -7,13 +7,11 @@ import Datepicker from '../components/Datepicker';
 import WalletsTable from '../partials/wallets/WalletsTable';
 import DeleteButton from '../partials/actions/DeleteButton';
 import DateSelect from '../components/DateSelect';
-import { setAuthToken } from '../services/network/api';
 import PaginationClassic from '../components/PaginationClassic';
 import { useWallets } from '../hooks/useWallets';
 
 function Dashboard() {
   const { data, pageSize, count, currentPage, setCurrentPage } = useWallets();
-  setAuthToken();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
