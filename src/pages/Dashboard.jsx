@@ -9,6 +9,7 @@ import DeleteButton from '../partials/actions/DeleteButton';
 import DateSelect from '../components/DateSelect';
 import PaginationClassic from '../components/PaginationClassic';
 import { useWallets } from '../hooks/useWallets';
+import SearchForm from '../partials/actions/SearchForm';
 
 function Dashboard() {
   const { data, pageSize, count, currentPage, setCurrentPage } = useWallets();
@@ -40,6 +41,8 @@ function Dashboard() {
 
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                {/* Search form */}
+                <SearchForm placeholder="Search by wallet address" />
                 {/* Delete button */}
                 <DeleteButton selectedItems={selectedItems} />
 
