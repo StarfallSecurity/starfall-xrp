@@ -19,14 +19,11 @@ export const fetchWalletsData = async (page: number, pageSize: number) => {
 
 export const fetchWalletByAddress = async (address: string) => {
   try {
-    const response = await instance.get(`${envUrl}api/api_addresses_retrieve/${address}/`, {
-      // params: {
-      //   address: addr
-      // }
-    });
-    console.log('response ', response);
+    const response = await instance.get(`${envUrl}api/addresses/${address}/`);
     return response?.data;
-  } catch (e) {}
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const fetchWalletPrediction = async (address: string) => {

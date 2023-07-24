@@ -93,3 +93,15 @@ export const typeIcon = (type) => {
       );
   }
 };
+
+export const convertToReadableFormat = (str) => {
+  // Split the input string by underscores and spaces
+  const words = str.split(/[_ ]+/);
+
+  // Capitalize the first letter of each word and join them with a space
+  const readableString = words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+  return readableString;
+};

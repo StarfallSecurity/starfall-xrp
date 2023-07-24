@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { fetchWalletByAddress } from '../../services/network/wallet';
 
-function SearchForm({ placeholder }) {
+interface Props {
+  placeholder?: string;
+  onSearch?: Function;
+}
+
+const SearchForm: React.FC<Props> = ({ placeholder, onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const handleSearch = async () => {
-    fetchWalletByAddress(searchTerm);
+
+  const handleSearch = (e: any) => {
+    e.preventDefault();
+    onSearch?.(searchTerm);
   };
+
   return (
     <form onSubmit={handleSearch} className="relative">
       <label htmlFor="action-search" className="sr-only">
@@ -30,10 +38,11 @@ function SearchForm({ placeholder }) {
       </button>
     </form>
   );
-}
+};
 
 SearchForm.defaultProps = {
-  placeholder: 'Search…'
+  placeholder: 'Search…',
+  onSearch: () => {}
 };
 
 export default SearchForm;

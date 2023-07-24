@@ -75,6 +75,7 @@ import FraudList from './pages/ecommerce/FraudList';
 import ApiTokens from './pages/Tokens';
 import ProtectedRoute from './navigation/ProtectedRoute';
 import PublicRoute from './navigation/PublicRoute';
+import WalletDetails from './pages/WalletDetails';
 
 function AppRoutes() {
   const location = useLocation();
@@ -95,6 +96,7 @@ function AppRoutes() {
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard/api-tokens" element={<ApiTokens />} />
+          <Route path="/dashboard/wallet/:walletAddress" element={<WalletDetails />} />
         </Route>
         {/* <Route path="/dashboard/analytics" element={<Analytics />} />
           <Route path="/dashboard/fintech" element={<Fintech />} />

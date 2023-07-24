@@ -1,46 +1,108 @@
 import React from 'react';
+import { convertToReadableFormat } from '../../utils/Utils';
 
 interface GridItemProps {
   label: string;
-  value: string;
+  value: string | boolean;
+  isLast?: boolean;
 }
 
-const GridItem: React.FC<GridItemProps> = ({ label, value }) => {
+const GridItem: React.FC<GridItemProps> = ({ label, value, isLast }) => {
+  const statusColor = (status: any) => {
+    switch (!!status) {
+      case true:
+        return 'bg-rose-100 text-rose-500';
+      case false:
+        return 'bg-emerald-100 text-emerald-600';
+      default:
+        return 'bg-slate-100 text-slate-500';
+    }
+  };
+
+  const statusLabel = (status: any) => {
+    return status ? 'Suspended' : 'Approved';
+  };
   return (
-    <div className="flex border border-gray-300 p-4">
-      <div className="text-gray-600 font-medium mr-2">{label}</div>
-      <div className="text-gray-800">{value}</div>
+    <div key={label}>
+      <div className="flex justify-between items-center">
+        <div className="text-gray-600 font-medium mr-2">{label}</div>
+        {label === 'Status' ? (
+          <div
+            className={`text-xs inline-flex font-medium rounded-full text-center px-2.5 py-1 ${statusColor(
+              value
+            )}`}
+          >
+            {statusLabel(value)}
+          </div>
+        ) : (
+          <div className="text-gray-800">{value}</div>
+        )}
+      </div>
+      {!isLast && <div className="my-4 border-b"></div>}
     </div>
   );
 };
 
 interface GridProps {
-  data: Record<string, string>;
+  data: any;
 }
 
 const Grid: React.FC<GridProps> = ({ data }) => {
   return (
-    <div className="space-x-4">
-      {Object.entries(data).map(([key, value]) => (
-        <GridItem key={key} label={key} value={value} />
+    <div className=" w-3/5 border mx-6 p-4">
+      {data.map(({ label, value, isLast }: any) => (
+        <GridItem key={label} label={label} value={value} isLast={isLast} />
       ))}
     </div>
   );
 };
 
-const WalletPrediction = () => {
-  const data: Record<string, string> = {
-    status: 'approved',
-    risk_score: '0.8',
-    message: 'This is a fraud txn wallet',
-    reason: 'loreum ipsum'
-  };
+const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
+  const walletData = Object.keys(walletInfo).reduce((acc: any, curr) => {
+    // let label, value;
+    switch (curr) {
+      case 'is_blacklist':
+        acc[0] = { label: 'Status', value: !!walletInfo?.is_blacklist };
+        break;
+      case 'fraud_probability':
+        acc[1] = { label: 'Risk Score', value: walletInfo?.fraud_probability };
+        break;
+      case 'fraud_message':
+        acc[2] = { label: 'Message', value: walletInfo?.fraud_message };
+        break;
+      case 'reason':
+        acc[3] = { label: 'Reason', value: walletInfo?.fraud_message };
+        break;
+      case 'fraud_prediction':
+        acc[4] = { label: 'Bot Detection', value: walletInfo?.fraud_prediction };
+        break;
+      case 'modified':
+        acc[5] = { label: 'Last Viewed', value: walletInfo?.modified };
+        break;
+      case 'created':
+        acc[6] = { label: 'Created', value: walletInfo?.created, isLast: true };
+        break;
+    }
+
+    return acc;
+  }, []);
+
+  const prediction = walletInfo?.predictions.map((prediction: any, index: number) => {
+    return {
+      label: convertToReadableFormat(prediction?.model_name),
+      value: prediction?.fraud_data?.fraud_probability,
+      isLast: index === walletInfo?.predictions.length - 1
+    };
+  });
+
   return (
-    <div className="bg-white shadow-lg rounded-sm border border-slate-200 relative">
-      <header className="px-5 py-4">
-        <h2 className="font-semibold text-slate-800">Prediction</h2>
+    <div className="bg-white shadow-lg rounded-sm border border-slate-200 pb-6 relative">
+      <header className="px-6 py-4">
+        <h2 className="font-semibold text-slate-800">Predictions</h2>
       </header>
-      <Grid data={data} />
+      <Grid data={walletData} />
+      <p className="font-semibold m-6 text-slate-800">Data</p>
+      <Grid data={prediction} />
     </div>
   );
 };
