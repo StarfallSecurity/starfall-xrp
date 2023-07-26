@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getFormattedDate } from '../../utils/Utils';
+import { getFormattedDateWithTime } from '../../utils/Utils';
 
 interface Props {
   token: string;
@@ -64,7 +64,7 @@ const ApiToken: React.FC<Props> = ({ token, created, deleteTokens }) => {
         </div>
         <div className="col-span-6 order-2 sm:order-none sm:col-span-3 text-left sm:text-center lg:sidebar-expanded:hidden xl:sidebar-expanded:block">
           <div className="text-sm font-medium text-slate-800 truncate">
-            {getFormattedDate(created)}
+            {getFormattedDateWithTime(created)}
           </div>
         </div>
         <div className="col-span-6 order-2 sm:order-none sm:col-span-2 text-right lg:sidebar-expanded:hidden xl:sidebar-expanded:block">
