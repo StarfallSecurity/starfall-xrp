@@ -40,6 +40,17 @@ export const getFormattedDate = (date) => {
   return moment(date).format('DD/MM/YYYY');
 };
 
+export const getFormattedDateWithTime = (date) => {
+  return moment(date).format('DD/MM/YYYY h:mm A');
+};
+
+export const toFixed = (n, digits = 2) => {
+  const fallback = 0;
+  if (!n) return fallback.toFixed(digits);
+  if (typeof n === 'string') return Number(n).toFixed(digits);
+  return n.toFixed(digits);
+};
+
 export const typeColor = (type) => {
   switch (type) {
     case 'warning':

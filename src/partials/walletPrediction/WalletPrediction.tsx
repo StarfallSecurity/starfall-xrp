@@ -1,13 +1,14 @@
 import React from 'react';
-import { convertToReadableFormat } from '../../utils/Utils';
+import { convertToReadableFormat, getFormattedDateWithTime, toFixed } from '../../utils/Utils';
 
 interface GridItemProps {
   label: string;
   value: string | boolean;
   isLast?: boolean;
+  className?: string;
 }
 
-const GridItem: React.FC<GridItemProps> = ({ label, value, isLast }) => {
+const GridItem: React.FC<GridItemProps> = ({ label, value, isLast, className }) => {
   const statusColor = (status: any) => {
     switch (!!status) {
       case true:
@@ -35,7 +36,7 @@ const GridItem: React.FC<GridItemProps> = ({ label, value, isLast }) => {
             {statusLabel(value)}
           </div>
         ) : (
-          <div className="text-gray-800">{value}</div>
+          <div className={`text-sm text-gray-800 ${className}`}>{value}</div>
         )}
       </div>
       {!isLast && <div className="my-4 border-b"></div>}
@@ -50,8 +51,8 @@ interface GridProps {
 const Grid: React.FC<GridProps> = ({ data }) => {
   return (
     <div className=" w-3/5 border mx-6 p-4">
-      {data.map(({ label, value, isLast }: any) => (
-        <GridItem key={label} label={label} value={value} isLast={isLast} />
+      {data?.map(({ label, value, isLast, className }: any) => (
+        <GridItem key={label} label={label} value={value} className={className} isLast={isLast} />
       ))}
     </div>
   );
@@ -59,35 +60,55 @@ const Grid: React.FC<GridProps> = ({ data }) => {
 
 const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
   const walletData = Object.keys(walletInfo).reduce((acc: any, curr) => {
-    // let label, value;
+    let className;
     switch (curr) {
       case 'is_blacklist':
         acc[0] = { label: 'Status', value: !!walletInfo?.is_blacklist };
         break;
       case 'fraud_probability':
-        acc[1] = { label: 'Risk Score', value: walletInfo?.fraud_probability };
+        className =
+          toFixed(walletInfo?.fraud_probability) > 0.5 ? 'text-emerald-500' : 'text-rose-500';
+        acc[1] = { label: 'Risk Score', value: toFixed(walletInfo?.fraud_probability), className };
         break;
       case 'fraud_message':
-        acc[2] = { label: 'Message', value: walletInfo?.fraud_message };
+        acc[2] = {
+          label: 'Message',
+          value: walletInfo?.fraud_message,
+          className: 'text-sm text-slate-600 italic'
+        };
         break;
       case 'reason':
-        acc[3] = { label: 'Reason', value: walletInfo?.fraud_message };
+        acc[3] = {
+          label: 'Reason',
+          value: walletInfo?.fraud_message,
+          className: 'text-sm text-slate-600 italic'
+        };
         break;
       case 'fraud_prediction':
-        acc[4] = { label: 'Bot Detection', value: walletInfo?.fraud_prediction };
+        className =
+          toFixed(walletInfo?.fraud_probability) > 0.5 ? 'text-emerald-500' : 'text-rose-500';
+        acc[4] = {
+          label: 'Bot Detection',
+          value: toFixed(walletInfo?.fraud_prediction),
+          className
+        };
         break;
       case 'modified':
-        acc[5] = { label: 'Last Viewed', value: walletInfo?.modified };
+        acc[5] = { label: 'Last Viewed', value: getFormattedDateWithTime(walletInfo?.modified) };
         break;
       case 'created':
-        acc[6] = { label: 'Created', value: walletInfo?.created, isLast: true };
+        acc[6] = {
+          label: 'Created',
+          value: getFormattedDateWithTime(walletInfo?.created),
+          isLast: true
+        };
         break;
     }
 
     return acc;
   }, []);
 
-  const prediction = walletInfo?.predictions.map((prediction: any, index: number) => {
+  const prediction = walletInfo?.predictions?.map((prediction: any, index: number) => {
     return {
       label: convertToReadableFormat(prediction?.model_name),
       value: prediction?.fraud_data?.fraud_probability,
