@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -9,14 +10,24 @@ import DeleteButton from '../partials/actions/DeleteButton';
 import DateSelect from '../components/DateSelect';
 import PaginationClassic from '../components/PaginationClassic';
 import { useWallets } from '../hooks/useWallets';
+import SearchForm from '../partials/actions/SearchForm';
+import { fetchWalletByAddress } from '../services/network/wallet';
 
 function Dashboard() {
+  const navigate = useNavigate();
   const { data, pageSize, count, currentPage, setCurrentPage } = useWallets();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectedItems = (selectedItems) => {
     setSelectedItems([...selectedItems]);
+  };
+
+  const handleSearch = async (searchTerm) => {
+    const response = await fetchWalletByAddress(searchTerm);
+    if (response) {
+      navigate(`dashboard/wallet/${searchTerm}`);
+    }
   };
 
   return (
@@ -35,11 +46,13 @@ function Dashboard() {
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">User Dashboard ✨</h1>
+                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">Wallet Lookups ✨</h1>
               </div>
 
               {/* Right: Actions */}
               <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                {/* Search form */}
+                <SearchForm placeholder="Search by wallet address" onSearch={handleSearch} />
                 {/* Delete button */}
                 <DeleteButton selectedItems={selectedItems} />
 

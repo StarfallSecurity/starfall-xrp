@@ -10,6 +10,8 @@ export const productionUrl = 'https://starfall-backend.herokuapp.com/';
 
 export const TOKEN_KEY = 'token';
 
+export const SUPPORT_EMAIL = 'support@starfall.ai';
+
 export const getUrl = () => {
   if (currentEnv === envs.LOCAL) {
     return localUrl;
