@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getFormattedDate, typeIcon } from '../../utils/Utils';
 import { fetchWalletPrediction } from '../../services/network/wallet';
+import { Link } from 'react-router-dom';
 
 function WalletsTableItem(props) {
   const { address, isBlackList, created, handleClick, isChecked } = props || {};
@@ -61,7 +62,15 @@ function WalletsTableItem(props) {
                 <img className="ml-1" src={props.image} width="20" height="20" alt={props.order} />
               </div>
             </div>
-            <div className="text-left">{address}</div>
+            <div className="text-left">
+            <Link
+                to={`/dashboard/wallet/${address}`}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              >
+                <span>{address}</span>
+            </Link>
+              
+            </div>
           </div>
         </td>
         <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
