@@ -206,17 +206,23 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </div>
           {/* More group */}
         </div>
-        <div className="justify-end mt-auto ml-1">
-          <p className="text-sm text-slate-300 font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-            Questions?
-          </p>
-          <a href={`mailto:${SUPPORT_EMAIL}`}>
-            <span className="text-sm text-slate-300 font-medium">Email: {SUPPORT_EMAIL}</span>
-          </a>
-        </div>
+        {sidebarExpanded && (
+          <div className="justify-end mt-auto ml-1">
+            <p className="text-sm text-slate-300 font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+              Questions?
+            </p>
+            <a href={`mailto:${SUPPORT_EMAIL}`}>
+              <span className="text-sm text-slate-300 font-medium">Email: {SUPPORT_EMAIL}</span>
+            </a>
+          </div>
+        )}
 
         {/* Expand / collapse button */}
-        <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-6">
+        <div
+          className={`pt-3 hidden lg:inline-flex 2xl:hidden justify-end ${
+            sidebarExpanded ? 'mt-6' : 'mt-auto'
+          }`}
+        >
           <div className="px-3 py-2">
             <button onClick={() => setSidebarExpanded(!sidebarExpanded)}>
               <span className="sr-only">Expand / collapse sidebar</span>
