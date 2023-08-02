@@ -139,7 +139,7 @@ function WalletsTableItem(props) {
                 </>
               ) : (
                 <div className="w-full justify-between text-sm text-slate-600 italic">
-                  No prediction found
+                  No predictions found
                 </div>
               )}
             </div>

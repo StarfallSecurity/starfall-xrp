@@ -116,6 +116,8 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
     };
   });
 
+  if (!Object.values(walletInfo || {}).length) return <div>No predictions found</div>;
+
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 pb-6 relative">
       <header className="px-6 py-4">
