@@ -76,10 +76,10 @@ function Header({ sidebarOpen, setSidebarOpen }) {
               </button>
               <SearchModal id="search-modal" searchId="search" modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
             </div> */}
-            <Notifications align="right" />
-            <Help align="right" />
+            {/* <Notifications align="right" />
+            <Help align="right" /> */}
             {/*  Divider */}
-            <hr className="w-px h-6 bg-slate-200 mx-3" />
+            {/* <hr className="w-px h-6 bg-slate-200 mx-3" /> */}
             <UserMenu align="right" />
           </div>
         </div>
