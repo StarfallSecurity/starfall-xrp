@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { fetchWalletByAddress } from '../../services/network/wallet';
+import { toast } from 'react-toastify';
+
 import Spinner from '../../pages/component/Spinner';
 
 interface Props {
   placeholder?: string;
   onSearch?: Function;
+  mainContainerStyle: string;
 }
 
-const SearchForm: React.FC<Props> = ({ placeholder, onSearch }) => {
+const SearchForm: React.FC<Props> = ({ placeholder, onSearch, mainContainerStyle }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const spinnerStyle: React.CSSProperties = {
@@ -25,12 +26,12 @@ const SearchForm: React.FC<Props> = ({ placeholder, onSearch }) => {
       await onSearch?.(searchTerm);
     } catch (error: any) {
       setLoading(false);
-      setError(error?.message || 'Something went wrong!');
+      toast.error(error?.message || 'Something went wrong!', { type: toast.TYPE.ERROR });
     }
   };
 
   return (
-    <div className="flex flex-col">
+    <div className={`flex flex-col ${mainContainerStyle}`}>
       <form onSubmit={handleSearch} className="relative">
         <label htmlFor="action-search" className="sr-only">
           Search
@@ -57,7 +58,6 @@ const SearchForm: React.FC<Props> = ({ placeholder, onSearch }) => {
           </button>
         )}
       </form>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
     </div>
   );
 };
