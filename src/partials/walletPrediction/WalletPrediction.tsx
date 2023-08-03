@@ -50,7 +50,7 @@ interface GridProps {
 
 const Grid: React.FC<GridProps> = ({ data }) => {
   return (
-    <div className=" w-3/5 border mx-6 p-4">
+    <div className="border mx-6 p-4 lg:w-3/5">
       {data?.map(({ label, value, isLast, className }: any) => (
         <GridItem key={label} label={label} value={value} className={className} isLast={isLast} />
       ))}
@@ -115,6 +115,8 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
       isLast: index === walletInfo?.predictions.length - 1
     };
   });
+
+  if (!Object.values(walletInfo || {}).length) return <div>No predictions found</div>;
 
   return (
     <div className="bg-white shadow-lg rounded-sm border border-slate-200 pb-6 relative">
