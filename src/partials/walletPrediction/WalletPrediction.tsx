@@ -50,7 +50,7 @@ interface GridProps {
 
 const Grid: React.FC<GridProps> = ({ data }) => {
   return (
-    <div className=" w-3/5 border mx-6 p-4">
+    <div className="border mx-6 p-4 lg:w-3/5">
       {data?.map(({ label, value, isLast, className }: any) => (
         <GridItem key={label} label={label} value={value} className={className} isLast={isLast} />
       ))}
