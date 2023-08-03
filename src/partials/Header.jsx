@@ -13,9 +13,13 @@ function Header({ sidebarOpen, setSidebarOpen }) {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   const handleSearch = async (searchTerm) => {
-    const response = await fetchWalletByAddress(searchTerm);
-    if (response) {
-      navigate(`dashboard/wallet/${searchTerm}`);
+    try {
+      const response = await fetchWalletByAddress(searchTerm);
+      if (response) {
+        navigate(`/dashboard/wallet/${searchTerm}`, { replace: true });
+      }
+    } catch (error) {
+      throw error;
     }
   };
 
@@ -23,6 +27,10 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
+          <div className="w-8/12 sm:hidden">
+            <SearchForm placeholder="Search by wallet address" onSearch={handleSearch} />
+          </div>
+
           {/* Header: Left side */}
           <div className="flex">
             {/* Hamburger button */}
@@ -46,7 +54,6 @@ function Header({ sidebarOpen, setSidebarOpen }) {
                 <rect x="4" y="17" width="16" height="2" />
               </svg>
             </button>
-            <SearchForm placeholder="Search by wallet address" onSearch={handleSearch} />
           </div>
 
           {/* Header: Right side */}

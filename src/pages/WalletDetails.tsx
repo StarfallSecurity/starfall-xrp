@@ -20,7 +20,7 @@ const WalletDetails: React.FC = () => {
         setWalletInfo(response);
       }
     })();
-  }, []);
+  }, [walletAddress]);
 
   return (
     <div className="flex h-screen overflow-hidden">
