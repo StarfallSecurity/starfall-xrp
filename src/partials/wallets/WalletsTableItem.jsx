@@ -90,7 +90,7 @@ function WalletsTableItem(props) {
           <div className="text-left font-medium text-sky-500">{props.lastOrder}</div>
         </td>
         <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-          <div className="flex flex-wrap items-center -m-1.5">
+          <div className="flex items-center -m-1.5">
             <div className="m-1.5">
               <button>{typeIcon('success')}</button>
             </div>
