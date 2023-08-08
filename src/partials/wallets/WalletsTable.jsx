@@ -9,7 +9,7 @@ function WalletsTable({ selectedItems, data }) {
 
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
-    setIsCheck(list.map((li) => li.id));
+    setIsCheck(data.map((li) => li.id));
     if (selectAll) {
       setIsCheck([]);
     }
@@ -18,7 +18,7 @@ function WalletsTable({ selectedItems, data }) {
   const handleClick = (e) => {
     const { id, checked } = e.target;
     setSelectAll(false);
-    setIsCheck([...isCheck, id]);
+    setIsCheck([...isCheck, +id]);
     if (!checked) {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
