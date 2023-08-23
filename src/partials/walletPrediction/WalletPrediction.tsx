@@ -59,6 +59,14 @@ const Grid: React.FC<GridProps> = ({ data }) => {
 };
 
 const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
+
+  const getRiskScore = () => {
+    if (walletInfo?.final_prediction == 1) {
+      return walletInfo?.fraud_probability;
+    }
+    return 1 - walletInfo?.fraud_probability;
+  };
+
   const walletData = Object.keys(walletInfo).reduce((acc: any, curr) => {
     let className;
     switch (curr) {
@@ -68,7 +76,7 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
       case 'fraud_probability':
         className =
           toFixed(walletInfo?.fraud_probability) > 0.5 ? 'text-emerald-500' : 'text-rose-500';
-        acc[1] = { label: 'Risk Score', value: toFixed(walletInfo?.fraud_probability), className };
+        acc[1] = { label: 'Risk Score', value: toFixed(getRiskScore()), className };
         break;
       case 'fraud_message':
         acc[2] = {
@@ -100,21 +108,22 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
         acc[6] = {
           label: 'Created',
           value: getFormattedDateWithTime(walletInfo?.created),
-        };
-        break;
-      case 'num_transactions':
-        acc[7] = {
-          label: 'Total Transactions',
-          value: walletInfo?.num_transactions,
-        };
-        break;
-      case 'num_erc20_token_transfers':
-        acc[8] = {
-          label: 'Total Token Transfers',
-          value: walletInfo?.num_erc20_token_transfers,
           isLast: true
         };
         break;
+      // case 'num_transactions':
+      //   acc[7] = {
+      //     label: 'Total Transactions',
+      //     value: walletInfo?.num_transactions,
+      //   };
+      //   break;
+      // case 'num_erc20_token_transfers':
+      //   acc[8] = {
+      //     label: 'Total Token Transfers',
+      //     value: walletInfo?.num_erc20_token_transfers,
+      //     isLast: true
+      //   };
+      //   break;
     }
 
     return acc;
