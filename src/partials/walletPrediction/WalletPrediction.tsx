@@ -63,7 +63,7 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
     let className;
     switch (curr) {
       case 'is_blacklist':
-        acc[0] = { label: 'Status', value: !!walletInfo?.is_blacklist };
+        acc[0] = { label: 'Status', value: !!walletInfo?.is_blacklist || walletInfo.final_prediction == 1 };
         break;
       case 'fraud_probability':
         className =
@@ -100,6 +100,18 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
         acc[6] = {
           label: 'Created',
           value: getFormattedDateWithTime(walletInfo?.created),
+        };
+        break;
+      case 'num_transactions':
+        acc[7] = {
+          label: 'Total Transactions',
+          value: walletInfo?.num_transactions,
+        };
+        break;
+      case 'num_erc20_token_transfers':
+        acc[8] = {
+          label: 'Total Token Transfers',
+          value: walletInfo?.num_erc20_token_transfers,
           isLast: true
         };
         break;
@@ -111,7 +123,7 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
   const prediction = walletInfo?.predictions?.map((prediction: any, index: number) => {
     return {
       label: convertToReadableFormat(prediction?.model_name),
-      value: prediction?.fraud_data?.fraud_probability,
+      value: prediction?.fraud_data?.fraud_probability || prediction?.bot_data?.fraud_probability,
       isLast: index === walletInfo?.predictions.length - 1
     };
   });
