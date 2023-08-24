@@ -66,7 +66,7 @@ function WalletsTable({ selectedItems, data }) {
                   <div className="font-semibold text-left">Status</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                  <div className="font-semibold">Risk Score</div>
+                  <div className="font-semibold text-left">Blockchain</div>
                 </th>
                 <th className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                   <div className="font-semibold text-left">Action</div>
@@ -85,6 +85,7 @@ function WalletsTable({ selectedItems, data }) {
                     key={id}
                     id={id}
                     address={address?.hash}
+                    blockchainName={address?.blockchain_name}
                     isBlackList={address?.is_blacklist}
                     created={created}
                     handleClick={handleClick}

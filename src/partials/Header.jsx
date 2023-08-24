@@ -11,10 +11,11 @@ import { useNavigate } from 'react-router-dom';
 function Header({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [blockchainName, setBlockchainName] = useState('ETH');
 
   const handleSearch = async (searchTerm) => {
     try {
-      const response = await fetchWalletByAddress(searchTerm);
+      const response = await fetchWalletByAddress(searchTerm, blockchainName);
       if (response) {
         navigate(`/dashboard/wallet/${searchTerm}`, { replace: true });
       }
@@ -23,12 +24,26 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     }
   };
 
+  const onOptionChangeHandler = (e) => {
+    setBlockchainName(e.target.value);
+  }
+
   return (
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 -mb-px">
           <div className="w-8/12 lg:block">
             <SearchForm placeholder="Search by wallet address" onSearch={handleSearch} />
+          </div>
+          <div className='w-4/12 lg:block'>
+            <select onChange={onOptionChangeHandler}>
+              <option>ETH</option>
+              {/* <option>BTC</option> */}
+              <option>BNB</option>
+              <option>BASE</option>
+              <option>METIS</option>
+              <option>ARBITRUM</option>
+            </select>
           </div>
 
           {/* Header: Left side */}

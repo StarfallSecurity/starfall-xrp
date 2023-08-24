@@ -96,7 +96,7 @@ function AppRoutes() {
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard/api-tokens" element={<ApiTokens />} />
-          <Route path="/dashboard/wallet/:walletAddress" element={<WalletDetails />} />
+          <Route path="/dashboard/wallet/:blockchainName/:walletAddress" element={<WalletDetails />} />
         </Route>
         {/* <Route path="/dashboard/analytics" element={<Analytics />} />
           <Route path="/dashboard/fintech" element={<Fintech />} />

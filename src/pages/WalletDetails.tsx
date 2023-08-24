@@ -9,13 +9,13 @@ import WalletPrediction from '../partials/walletPrediction/WalletPrediction';
 import { fetchWalletByAddress } from '../services/network/wallet';
 
 const WalletDetails: React.FC = () => {
-  const { walletAddress } = useParams();
+  const { walletAddress, blockchainName } = useParams();
   const [walletInfo, setWalletInfo] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const response = await fetchWalletByAddress(walletAddress as string);
+      const response = await fetchWalletByAddress(walletAddress as string, blockchainName as string);
       if (response) {
         setWalletInfo(response);
       }
@@ -24,7 +24,7 @@ const WalletDetails: React.FC = () => {
 
   const recomputePrediction = () => {
     (async () => {
-      const response = await fetchWalletByAddress(walletAddress as string, true);
+      const response = await fetchWalletByAddress(walletAddress as string, blockchainName as string, true);
       if (response) {
         setWalletInfo(response);
       }

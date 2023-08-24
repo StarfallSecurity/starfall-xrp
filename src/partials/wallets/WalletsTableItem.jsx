@@ -4,7 +4,7 @@ import { fetchWalletPrediction } from '../../services/network/wallet';
 import { Link } from 'react-router-dom';
 
 function WalletsTableItem(props) {
-  const { address, isBlackList, created, handleClick, isChecked } = props || {};
+  const { address, isBlackList, created, handleClick, isChecked, blockchainName } = props || {};
   const [open, setOpen] = useState(false);
   const [predictionData, setPredictionData] = useState({});
 
@@ -64,7 +64,7 @@ function WalletsTableItem(props) {
             </div>
             <div className="text-left">
               <Link
-                to={`/dashboard/wallet/${address}`}
+                to={`/dashboard/wallet/${blockchainName}/${address}`}
                 onClick={() => setDropdownOpen(!dropdownOpen)}
               >
                 <span>{address}</span>
@@ -87,7 +87,7 @@ function WalletsTableItem(props) {
           </div>
         </td>
         <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-          <div className="text-left font-medium text-sky-500">{props.lastOrder}</div>
+          <div className="text-left font-medium text-slate-500">{blockchainName}</div>
         </td>
         <td className="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
           <div className="flex items-center -m-1.5">

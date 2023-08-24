@@ -17,12 +17,17 @@ export const fetchWalletsData = async (page: number, pageSize: number) => {
   }
 };
 
-export const fetchWalletByAddress = async (address: string, recompute: boolean = false) => {
+export const fetchWalletByAddress = async (address: string, blockchainName: string, recompute: boolean = false) => {
   try {
     let url = `${envUrl}api/addresses/${address}/`;
+    const searchParams = new URLSearchParams();
     if (recompute) {
-      url += '?recompute=True';
+      searchParams.append('recompute', 'True');
     }
+    if (blockchainName) {
+      searchParams.append('blockchain_name', blockchainName);
+    }
+    url += `?${searchParams.toString()}`;
     const response = await instance.get(url);
     return response?.data;
   } catch (e) {
