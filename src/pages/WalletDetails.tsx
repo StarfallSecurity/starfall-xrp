@@ -23,7 +23,6 @@ const WalletDetails: React.FC = () => {
   }, [walletAddress]);
 
   const recomputePrediction = () => {
-    console.log("here");
     (async () => {
       const response = await fetchWalletByAddress(walletAddress as string, true);
       if (response) {
