@@ -17,7 +17,7 @@ export const fetchWalletsData = async (page: number, pageSize: number) => {
   }
 };
 
-export const fetchWalletByAddress = async (address: string, recompute: boolean) => {
+export const fetchWalletByAddress = async (address: string, recompute: boolean = false) => {
   try {
     let url = `${envUrl}api/addresses/${address}/`;
     if (recompute) {
