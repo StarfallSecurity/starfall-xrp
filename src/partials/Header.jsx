@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 function Header({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [blockchainName, setBlockchainName] = useState('ETH');
+  const [blockchainName, setBlockchainName] = useState('ethereum');
 
   const handleSearch = async (searchTerm) => {
     try {
       const response = await fetchWalletByAddress(searchTerm, blockchainName);
       if (response) {
-        navigate(`/dashboard/wallet/${searchTerm}`, { replace: true });
+        navigate(`/dashboard/wallet/${blockchainName}/${searchTerm}`, { replace: true });
       }
     } catch (error) {
       throw error;
@@ -36,13 +36,13 @@ function Header({ sidebarOpen, setSidebarOpen }) {
             <SearchForm placeholder="Search by wallet address" onSearch={handleSearch} />
           </div>
           <div className='w-4/12 lg:block'>
-            <select onChange={onOptionChangeHandler}>
-              <option>ETH</option>
-              {/* <option>BTC</option> */}
-              <option>BNB</option>
-              <option>BASE</option>
-              <option>METIS</option>
-              <option>ARBITRUM</option>
+            <select onChange={onOptionChangeHandler} defaultValue="ethereum">
+              <option value="ethereum">ETH</option>
+              <option value="bitcoin">BTC</option>
+              <option value="binance">BNB</option>
+              <option value="base">BASE</option>
+              <option value="metis">METIS</option>
+              <option value="arbitrum">ARBITRUM</option>
             </select>
           </div>
 
