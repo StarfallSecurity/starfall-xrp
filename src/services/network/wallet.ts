@@ -17,9 +17,13 @@ export const fetchWalletsData = async (page: number, pageSize: number) => {
   }
 };
 
-export const fetchWalletByAddress = async (address: string) => {
+export const fetchWalletByAddress = async (address: string, recompute: boolean) => {
   try {
-    const response = await instance.get(`${envUrl}api/addresses/${address}/`);
+    let url = `${envUrl}api/addresses/${address}/`;
+    if (recompute) {
+      url += '?recompute=True';
+    }
+    const response = await instance.get(url);
     return response?.data;
   } catch (e) {
     throw e;
