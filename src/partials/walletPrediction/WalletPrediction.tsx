@@ -60,6 +60,8 @@ const Grid: React.FC<GridProps> = ({ data }) => {
 
 const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
 
+  console.log(walletInfo)
+
   const getRiskScore = () => {
     if (walletInfo?.final_prediction == 1) {
       return walletInfo?.fraud_probability;
@@ -121,6 +123,12 @@ const WalletPrediction: React.FC<any> = ({ walletInfo }) => {
         acc[8] = {
           label: 'Total Token Transfers',
           value: walletInfo?.num_erc20_token_transfers,
+        };
+        break;
+      case 'blockchain_name':
+        acc[9] = {
+          label: 'Blockchain',
+          value: walletInfo?.blockchain_name,
           isLast: true
         };
         break;
