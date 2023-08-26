@@ -17,7 +17,8 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     try {
       const response = await fetchWalletByAddress(searchTerm, blockchainName);
       if (response) {
-        navigate(`/dashboard/wallet/${blockchainName}/${searchTerm}`, { replace: true });
+        navigate(`/dashboard/wallet/${blockchainName}/${searchTerm}`);
+        navigate(0);
       }
     } catch (error) {
       throw error;
@@ -26,7 +27,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
 
   const onOptionChangeHandler = (e) => {
     setBlockchainName(e.target.value);
-  }
+  };
 
   return (
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
@@ -35,7 +36,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
           <div className="w-8/12 lg:block">
             <SearchForm placeholder="Search by wallet address" onSearch={handleSearch} />
           </div>
-          <div className='w-4/12 lg:block'>
+          <div className="w-4/12 lg:block">
             <select onChange={onOptionChangeHandler} defaultValue="ethereum">
               <option value="ethereum">ETH</option>
               <option value="bitcoin">BTC</option>
