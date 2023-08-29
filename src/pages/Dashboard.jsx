@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -10,7 +11,8 @@ import PaginationClassic from '../components/PaginationClassic';
 import { useWallets } from '../hooks/useWallets';
 
 function Dashboard() {
-  const { data, pageSize, count, currentPage, setCurrentPage } = useWallets();
+  const { data, pageSize, count, currentPage, setCurrentPage, handlePageChange } = useWallets();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -65,8 +67,8 @@ function Dashboard() {
             <div className="mt-8">
               <PaginationClassic
                 pageSize={pageSize}
-                fetchNextPage={() => setCurrentPage(currentPage + 1)}
-                fetchPreviousPage={() => setCurrentPage(currentPage - 1)}
+                fetchNextPage={() => handlePageChange(currentPage + 1)}
+                fetchPreviousPage={() => handlePageChange(currentPage - 1)}
                 currentPage={currentPage}
                 count={count}
               />
