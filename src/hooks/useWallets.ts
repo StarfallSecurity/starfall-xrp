@@ -12,7 +12,7 @@ export const useWallets = () => {
   const [count, setCount] = useState(0);
   const navigate = useNavigate();
 
-  const pageSize = 10; // Define the number of items per page
+  const pageSize = 20; // Define the number of items per page
 
   useEffect(() => {
     (async () => {
