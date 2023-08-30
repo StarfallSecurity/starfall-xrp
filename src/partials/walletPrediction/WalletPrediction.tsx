@@ -59,12 +59,6 @@ const Grid: React.FC<GridProps> = ({ data }) => {
 };
 
 const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
-  const getRiskScore = () => {
-    if (walletInfo?.final_prediction == 1) {
-      return walletInfo?.fraud_probability;
-    }
-    return 1 - walletInfo?.fraud_probability;
-  };
 
   const walletData = Object.keys(walletInfo).reduce((acc: any, curr) => {
     let className;
@@ -78,7 +72,7 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
       case 'fraud_probability':
         className =
           toFixed(walletInfo?.fraud_probability) > 0.5 ? 'text-emerald-500' : 'text-rose-500';
-        acc[1] = { label: 'Risk Score', value: toFixed(getRiskScore()), className };
+        acc[1] = { label: 'Risk Score', value: toFixed(walletInfo?.fraud_probability), className };
         break;
       case 'fraud_message':
         acc[2] = {
@@ -94,15 +88,15 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
           className: 'text-sm text-slate-600 italic'
         };
         break;
-      case 'fraud_prediction':
-        className =
-          toFixed(walletInfo?.fraud_probability) > 0.5 ? 'text-emerald-500' : 'text-rose-500';
-        acc[4] = {
-          label: 'Bot Detection',
-          value: toFixed(walletInfo?.fraud_prediction),
-          className
-        };
-        break;
+      // case 'fraud_prediction':
+      //   className =
+      //     toFixed(walletInfo?.fraud_probability) > 0.5 ? 'text-emerald-500' : 'text-rose-500';
+      //   acc[4] = {
+      //     label: 'Fraud Prediction',
+      //     value: toFixed(walletInfo?.fraud_prediction),
+      //     className
+      //   };
+      //   break;
       case 'modified':
         acc[5] = { label: 'Last Viewed', value: getFormattedDateWithTime(walletInfo?.modified) };
         break;
@@ -124,8 +118,14 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
           value: walletInfo?.num_erc20_token_transfers,
         };
         break;
-      case 'blockchain_name':
+      case 'is_bot':
         acc[9] = {
+          label: 'Is Bot',
+          value: walletInfo?.is_bot.toString().toUpperCase(),
+        };
+        break;
+      case 'blockchain_name':
+        acc[10] = {
           label: 'Blockchain',
           value: walletInfo?.blockchain_name,
           isLast: true

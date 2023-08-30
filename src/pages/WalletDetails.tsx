@@ -14,12 +14,13 @@ const WalletDetails: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const fetchPrediction = async () => {
+  const fetchPrediction = async (recompute: boolean = false) => {
     try {
       setLoading(true);
       const response = await fetchWalletByAddress(
         walletAddress as string,
-        blockchainName as string
+        blockchainName as string,
+        recompute
       );
       setLoading(false);
       if (response) {
@@ -58,7 +59,7 @@ const WalletDetails: React.FC = () => {
                 {/* Add customer button */}
                 <button
                   className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-                  onClick={fetchPrediction}
+                  onClick={() => {fetchPrediction(true)}}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

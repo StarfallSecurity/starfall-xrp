@@ -26,7 +26,7 @@ function WalletsTableItem(props) {
   const handleViewMore = async () => {
     setOpen(!open);
     if (!open) {
-      const response = await fetchWalletPrediction(address);
+      const response = await fetchWalletPrediction(address, blockchainName);
       setPredictionData(response);
     }
   };
@@ -133,6 +133,7 @@ function WalletsTableItem(props) {
                   </svg>
                   <div className="w-full justify-between text-sm text-slate-600 italic">
                     <div>Risk Score: {toFixed(predictionData?.fraud_probability)}</div>
+                    <div>Is Bot: {predictionData?.is_bot}</div>
                     <div className="mt-1">Message: {predictionData?.fraud_message}</div>
                     <div className="mt-1">Reason: {predictionData?.fraud_message}</div>
                   </div>
