@@ -122,6 +122,12 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
         acc[8] = {
           label: 'Total Token Transfers',
           value: walletInfo?.num_erc20_token_transfers,
+        };
+        break;
+      case 'blockchain_name':
+        acc[9] = {
+          label: 'Blockchain',
+          value: walletInfo?.blockchain_name,
           isLast: true
         };
         break;

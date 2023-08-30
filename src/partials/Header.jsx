@@ -44,6 +44,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
               <option value="base">BASE</option>
               <option value="metis">METIS</option>
               <option value="arbitrum">ARBITRUM</option>
+              <option value="linea">LINEA</option>
             </select>
           </div>
 
