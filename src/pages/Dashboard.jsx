@@ -45,10 +45,10 @@ function Dashboard() {
                 <DeleteButton selectedItems={selectedItems} />
 
                 {/* Dropdown */}
-                <DateSelect />
+                {/* <DateSelect /> */}
 
                 {/* Filter button */}
-                <FilterButton align="right" />
+                {/* <FilterButton align="right" /> */}
 
                 {/* Add customer button */}
                 <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
