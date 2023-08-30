@@ -4,13 +4,9 @@ import Sidebar from '../../partials/Sidebar';
 import Header from '../../partials/Header';
 import SettingsSidebar from '../../partials/settings/SettingsSidebar';
 import AccountPanel from '../../partials/settings/AccountPanel';
-import useUser from '../../hooks/useUser';
 
 const Account: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { data: userData, isLoading } = useUser();
-
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -34,7 +30,7 @@ const Account: React.FC = () => {
             <div className="bg-white shadow-lg rounded-sm mb-8">
               <div className="flex flex-col md:flex-row md:-mr-px">
                 <SettingsSidebar />
-                <AccountPanel userData={userData} />
+                <AccountPanel />
               </div>
             </div>
           </div>
