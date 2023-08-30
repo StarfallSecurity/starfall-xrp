@@ -146,6 +146,14 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
     };
   });
 
+  const signals = walletInfo?.signals?.map((signal: any, index: number) => {
+    return {
+      label: convertToReadableFormat(signal?.name),
+      value: toFixed(signal?.data),
+      isLast: index === walletInfo?.signals.length - 1
+    };
+  });
+
   if (loading) return <div>Loading...</div>;
 
   if (!Object.values(walletInfo || {}).length) return <div>No predictions found</div>;
@@ -158,6 +166,8 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
       <Grid data={walletData} />
       <p className="font-semibold m-6 text-slate-800">Data</p>
       <Grid data={prediction} />
+      <p className="font-semibold m-6 text-slate-800">Signals</p>
+      <Grid data={signals} />
     </div>
   );
 };
