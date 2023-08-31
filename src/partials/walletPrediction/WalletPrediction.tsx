@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertToReadableFormat, getFormattedDateWithTime, toFixed } from '../../utils/Utils';
+import { convertToReadableFormat, getFormattedDateWithTime, renderSignalData, toFixed } from '../../utils/Utils';
 
 interface GridItemProps {
   label: string;
@@ -121,7 +121,7 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
       case 'is_bot':
         acc[9] = {
           label: 'Is Bot',
-          value: walletInfo?.is_bot.toString().toUpperCase(),
+          value: walletInfo?.is_bot?.toString().toUpperCase(),
         };
         break;
       case 'blockchain_name':
@@ -149,7 +149,7 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
   const signals = walletInfo?.signals?.map((signal: any, index: number) => {
     return {
       label: convertToReadableFormat(signal?.name),
-      value: toFixed(signal?.data),
+      value: renderSignalData(signal?.data),
       isLast: index === walletInfo?.signals.length - 1
     };
   });
@@ -167,7 +167,9 @@ const WalletPrediction: React.FC<any> = ({ walletInfo, loading }) => {
       <p className="font-semibold m-6 text-slate-800">Data</p>
       <Grid data={prediction} />
       <p className="font-semibold m-6 text-slate-800">Signals</p>
-      <Grid data={signals} />
+      {(signals.length > 0) && (
+        <Grid data={signals} />
+      )}
     </div>
   );
 };

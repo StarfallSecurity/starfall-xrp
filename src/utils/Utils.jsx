@@ -116,3 +116,10 @@ export const convertToReadableFormat = (str) => {
 
   return readableString;
 };
+
+export const renderSignalData = (data) => {
+  if (typeof(data) === "object") {
+    return JSON.stringify(data, null, 2);
+  }
+  return data;
+}
