@@ -105,7 +105,7 @@ export const typeIcon = (type) => {
   }
 };
 
-export const convertToReadableFormat = (str) => {
+export const convertToReadableFormat = (str = '') => {
   // Split the input string by underscores and spaces
   const words = str.split(/[_ ]+/);
 
@@ -118,8 +118,8 @@ export const convertToReadableFormat = (str) => {
 };
 
 export const renderSignalData = (data) => {
-  if (typeof(data) === "object") {
+  if (typeof data === 'object') {
     return JSON.stringify(data, null, 2);
   }
   return data;
-}
+};
