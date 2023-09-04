@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -10,9 +10,14 @@ import { fetchWalletByAddress } from '../services/network/wallet';
 
 const WalletDetails: React.FC = () => {
   const { walletAddress, blockchainName } = useParams();
+  const navigate = useNavigate();
   const [walletInfo, setWalletInfo] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const navToRelatedAccounts = () => {
+    navigate(`/wallets/${walletAddress}/related`);
+  };
 
   const fetchPrediction = async (recompute: boolean = false) => {
     try {
@@ -52,6 +57,12 @@ const WalletDetails: React.FC = () => {
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
                 <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">{walletAddress}</h1>
+                <div
+                  onClick={navToRelatedAccounts}
+                  className={`text-xs inline-flex cursor-pointer font-medium rounded-full text-center px-2.5 py-1 bg-blue-100 text-blue-600`}
+                >
+                  Related
+                </div>
               </div>
 
               {/* Right: Actions */}
@@ -59,7 +70,9 @@ const WalletDetails: React.FC = () => {
                 {/* Add customer button */}
                 <button
                   className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
-                  onClick={() => {fetchPrediction(true)}}
+                  onClick={() => {
+                    fetchPrediction(true);
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
