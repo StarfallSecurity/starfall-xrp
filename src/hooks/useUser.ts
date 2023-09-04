@@ -4,7 +4,11 @@ import { fetchUser } from '../services/network/auth';
 import { queryKeys } from '../utils/queryKeys';
 
 const useUser = () => {
-  return useQuery([queryKeys.USER_DETAILS], () => fetchUser(), { initialData: {} });
+  return useQuery({
+    queryKey: [queryKeys.USER_DETAILS],
+    queryFn: () => fetchUser(),
+    placeholderData: {}
+  });
 };
 
 export default useUser;
