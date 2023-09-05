@@ -1,4 +1,4 @@
-import { WalletsResponse } from '../../types/wallets';
+import { WalletsRelatedAccountResponse, WalletsResponse } from '../../types/wallets';
 import { envUrl } from '../../constants';
 import instance from './api';
 
@@ -17,7 +17,11 @@ export const fetchWalletsData = async (page: number, pageSize: number) => {
   }
 };
 
-export const fetchWalletByAddress = async (address: string, blockchainName: string, recompute: boolean = false) => {
+export const fetchWalletByAddress = async (
+  address: string,
+  blockchainName: string,
+  recompute: boolean = false
+) => {
   try {
     let url = `${envUrl}api/addresses/${address}/`;
     const searchParams = new URLSearchParams();
@@ -35,7 +39,11 @@ export const fetchWalletByAddress = async (address: string, blockchainName: stri
   }
 };
 
-export const fetchWalletPrediction = async (address: string, blockchainName: string, recompute: boolean = false) => {
+export const fetchWalletPrediction = async (
+  address: string,
+  blockchainName: string,
+  recompute: boolean = false
+) => {
   try {
     let url = `${envUrl}api/final_predictions/${address}/`;
     const searchParams = new URLSearchParams();
@@ -47,6 +55,22 @@ export const fetchWalletPrediction = async (address: string, blockchainName: str
     }
     url += `?${searchParams.toString()}`;
     const response = await instance.get(url);
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchRelatedWalletAccounts = async (address: string) => {
+  try {
+    const response = await instance.get<WalletsRelatedAccountResponse>(
+      `${envUrl}api/addresses/${address}/related/`,
+      {
+        headers: {
+          Authorization: 'Token 9280d4af904ab11d19cdbf2e4a3288e575ade401'
+        }
+      }
+    );
     return response?.data;
   } catch (error) {
     console.error(error);
