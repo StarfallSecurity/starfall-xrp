@@ -5,6 +5,7 @@ import Header from '../partials/Header';
 import { useRelatedAccounts } from '../hooks/useRelatedAccounts';
 import { convertToReadableFormat, toFixed } from '../utils/Utils';
 import WebTable from '../components/WebTable';
+import Image01 from '../images/icon-01.svg';
 
 let ignoreSignalColumns = ['flag'];
 
@@ -14,6 +15,26 @@ const RelatedAccounts = () => {
 
   const columns = useMemo(() => {
     const commonCol = [
+      {
+        name: 'hash',
+        label: 'Wallet Address',
+        options: {
+          customBodyRender: (value: number) => {
+            return (
+              <div className="flex flex-row items-center -m-1.5">
+                <div className="flex items-center text-slate-800">
+                  <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-slate-100 rounded-full mr-2 sm:mr-3">
+                    <img className="ml-1" src={Image01} width="20" height="20" />
+                  </div>
+                </div>
+                <div className="text-left">
+                  <span>{value}</span>
+                </div>
+              </div>
+            );
+          }
+        }
+      },
       {
         name: 'fraud_probability',
         label: 'Fraud Probability',
@@ -59,6 +80,7 @@ const RelatedAccounts = () => {
     return data.map((item) => ({
       id: item.id,
       fraud_probability: item.fraud_probability,
+      hash: item.hash,
       is_bot: item.is_bot,
       ...item.signals.reduce((acc: any, signal) => {
         acc[`signal_${signal.name}`] = signal.data;
