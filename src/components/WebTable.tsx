@@ -1,5 +1,9 @@
 import React, { memo } from 'react';
-import MUIDataTable, { MUIDataTableOptions, MUIDataTableColumnDef } from 'mui-datatables';
+import MUIDataTable, {
+  MUIDataTableOptions,
+  MUIDataTableColumnDef,
+  MUIDataTableCustomHeadRenderer
+} from 'mui-datatables';
 
 import Spinner from '../pages/component/Spinner';
 
@@ -11,23 +15,29 @@ type WebTableProps = {
   loading: boolean;
 };
 
+const customHeadLabelRender = (columnMeta: MUIDataTableCustomHeadRenderer) => (
+  <p className="w-32 text-xs font-semibold uppercase text-slate-500 capitalize">
+    {columnMeta.label}
+  </p>
+);
+
 const buildColumns = (columns: MUIDataTableColumnDef[]) =>
   columns.map((c: MUIDataTableColumnDef) => {
     let cl: MUIDataTableColumnDef = c;
     if (typeof c === 'object' && !Array.isArray(c) && c !== null) {
       cl = {
         ...c
-        // label: (
-        //   <p className="w-32 text-xs font-semibold uppercase text-slate-500 capitalize">
-        //     {c.label}
-        //   </p>
-        // )
       };
 
       if (c.options) {
-        cl['options'] = { ...c.options };
+        cl['options'] = {
+          customHeadLabelRender,
+          ...c.options
+        };
       } else {
-        cl['options'] = {};
+        cl['options'] = {
+          customHeadLabelRender
+        };
       }
 
       cl.options.setCellHeaderProps = () => {

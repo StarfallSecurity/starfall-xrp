@@ -19,7 +19,7 @@ const RelatedAccounts = () => {
         label: 'Fraud Probability',
         options: {
           customBodyRender: (value: number) => {
-            return <div className="text">{toFixed(value)}</div>;
+            return <div className="text-center">{toFixed(value)}</div>;
           }
         }
       },
@@ -28,7 +28,7 @@ const RelatedAccounts = () => {
         label: 'Is Bot',
         options: {
           customBodyRender: (value: boolean | null) => {
-            return <div>{value ? 'Yes' : 'No'}</div>;
+            return <div className="text-center">{value ? 'Yes' : 'No'}</div>;
           }
         }
       }
