@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -11,9 +12,19 @@ let ignoreSignalColumns = ['flag'];
 const RelatedAccounts = () => {
   const { data, walletAddress, isLoading } = useRelatedAccounts();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const columns = useMemo(() => {
     const commonCol = [
+      {
+        name: 'hash',
+        label: 'Address',
+        options: {
+          customBodyRender: (hash_attrs: object) => {
+            return <div className="text-center cursor-pointer" onClick={() => {navigate(`/dashboard/wallet/${hash_attrs.blokchain_name}/${hash_attrs.hash}/`);}}>{hash_attrs.hash}</div>;
+          }
+        }
+      },
       {
         name: 'fraud_probability',
         label: 'Fraud Probability',
@@ -58,6 +69,7 @@ const RelatedAccounts = () => {
   const tableData = useMemo(() => {
     return data.map((item) => ({
       id: item.id,
+      hash: {hash: item.hash, blokchain_name: item.blockchain_name},
       fraud_probability: item.fraud_probability,
       is_bot: item.is_bot,
       ...item.signals.reduce((acc: any, signal) => {

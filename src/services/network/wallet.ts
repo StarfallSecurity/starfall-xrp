@@ -67,7 +67,7 @@ export const fetchRelatedWalletAccounts = async (address: string) => {
       `${envUrl}api/addresses/${address}/related/`,
       {
         headers: {
-          Authorization: 'Token 9280d4af904ab11d19cdbf2e4a3288e575ade401'
+          Authorization: 'Token 972b7157c37fcca2038cb7a279addbd63728399d'
         }
       }
     );
