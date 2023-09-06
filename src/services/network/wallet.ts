@@ -61,15 +61,10 @@ export const fetchWalletPrediction = async (
   }
 };
 
-export const fetchRelatedWalletAccounts = async (address: string) => {
+export const fetchRelatedWalletAccounts = async (address: string, blockchainName: string) => {
   try {
     const response = await instance.get<WalletsRelatedAccountResponse>(
-      `${envUrl}api/addresses/${address}/related/`,
-      {
-        headers: {
-          Authorization: 'Token 972b7157c37fcca2038cb7a279addbd63728399d'
-        }
-      }
+      `${envUrl}api/addresses/${address}/related/?blockchain_name=${blockchainName}`
     );
     return response?.data;
   } catch (error) {
