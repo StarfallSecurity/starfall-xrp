@@ -21,8 +21,8 @@ const RelatedAccounts = () => {
       id: item.id,
       hash: item.hash,
       blockchain_name: item.blockchain_name,
-      fraud_probability: item.fraud_probability,
-      is_bot: item.is_bot,
+      fraud_probability: toFixed(item.fraud_probability),
+      is_bot: item.is_bot ? 'Yes' : 'No',
       ...item.signals.reduce((acc: any, signal) => {
         acc[`signal_${signal.name}`] = signal.data;
         return acc;
@@ -72,7 +72,7 @@ const RelatedAccounts = () => {
         label: 'Fraud Probability',
         options: {
           customBodyRender: (value: number) => {
-            return <div className="text-center">{toFixed(value)}</div>;
+            return <div className="text-center">{value}</div>;
           }
         }
       },
@@ -80,8 +80,8 @@ const RelatedAccounts = () => {
         name: 'is_bot',
         label: 'Is Bot',
         options: {
-          customBodyRender: (value: boolean | null) => {
-            return <div className="text-center">{value ? 'Yes' : 'No'}</div>;
+          customBodyRender: (value: string) => {
+            return <div className="text-center">{value}</div>;
           }
         }
       }
