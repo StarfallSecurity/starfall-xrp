@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { MUIDataTableMeta } from 'mui-datatables';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
@@ -11,9 +12,23 @@ import Image01 from '../images/icon-01.svg';
 let ignoreSignalColumns = ['flag'];
 
 const RelatedAccounts = () => {
-  const { data, walletAddress, isLoading } = useRelatedAccounts();
+  const { data, walletAddress, blockchainName, isLoading } = useRelatedAccounts();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+
+  const tableData = useMemo(() => {
+    return data.map((item) => ({
+      id: item.id,
+      hash: item.hash,
+      blockchain_name: item.blockchain_name,
+      fraud_probability: item.fraud_probability,
+      is_bot: item.is_bot,
+      ...item.signals.reduce((acc: any, signal) => {
+        acc[`signal_${signal.name}`] = signal.data;
+        return acc;
+      }, {})
+    }));
+  }, [data]);
 
   const columns = useMemo(() => {
     const commonCol = [
@@ -21,19 +36,34 @@ const RelatedAccounts = () => {
         name: 'hash',
         label: 'Wallet Address',
         options: {
-          customBodyRender: (hash_attrs: object) => {
+          customBodyRender: (hash: string, tableMeta: MUIDataTableMeta) => {
+            const blockchain = tableMeta.rowData[1];
             return (
-              <div className="flex flex-row items-center -m-1.5 cursor-pointer" onClick={() => {navigate(`/dashboard/wallet/${hash_attrs.blokchain_name}/${hash_attrs.hash}/`);}}>
+              <div
+                className="flex flex-row items-center -m-1.5 cursor-pointer"
+                onClick={() => {
+                  navigate(`/dashboard/wallet/${blockchain}/${hash}/`);
+                }}
+              >
                 <div className="flex items-center text-slate-800">
                   <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-slate-100 rounded-full mr-2 sm:mr-3">
                     <img className="ml-1" src={Image01} width="20" height="20" />
                   </div>
                 </div>
                 <div className="text-left">
-                  <span>{hash_attrs.hash}</span>
+                  <span>{hash}</span>
                 </div>
               </div>
             );
+          }
+        }
+      },
+      {
+        name: 'blockchain_name',
+        label: 'Blockchain',
+        options: {
+          customBodyRender: (value: string) => {
+            return <div className="text-center">{value}</div>;
           }
         }
       },
@@ -76,20 +106,7 @@ const RelatedAccounts = () => {
         : [];
 
     return [...commonCol, ...signalColumns];
-  }, [data]);
-
-  const tableData = useMemo(() => {
-    return data.map((item) => ({
-      id: item.id,
-      hash: {hash: item.hash, blokchain_name: item.blockchain_name},
-      fraud_probability: item.fraud_probability,
-      is_bot: item.is_bot,
-      ...item.signals.reduce((acc: any, signal) => {
-        acc[`signal_${signal.name}`] = signal.data;
-        return acc;
-      }, {})
-    }));
-  }, [data]);
+  }, [tableData]);
 
   return (
     <div className="flex h-screen overflow-hidden">

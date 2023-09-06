@@ -6,15 +6,16 @@ import { fetchRelatedWalletAccounts } from '../services/network/wallet';
 import { queryKeys } from '../utils/queryKeys';
 
 export const useRelatedAccounts = () => {
-  const { walletAddress } = useParams();
+  const { walletAddress, blockchainName } = useParams();
 
   const { data, isLoading } = useQuery([`${queryKeys.RELATED_ACCOUNTS}-${walletAddress}`], () =>
-    fetchRelatedWalletAccounts(walletAddress as string)
+    fetchRelatedWalletAccounts(walletAddress as string, blockchainName as string)
   );
 
   return {
     data: Object.values(data || {}),
     isLoading,
-    walletAddress
+    walletAddress,
+    blockchainName
   };
 };

@@ -16,7 +16,7 @@ const WalletDetails: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const navToRelatedAccounts = () => {
-    navigate(`/wallets/${walletAddress}/related`);
+    navigate(`/wallets/${blockchainName}/${walletAddress}/related`);
   };
 
   const fetchPrediction = async (recompute: boolean = false) => {
