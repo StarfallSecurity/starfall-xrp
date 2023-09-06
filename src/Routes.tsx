@@ -76,6 +76,7 @@ import ApiTokens from './pages/Tokens';
 import ProtectedRoute from './navigation/ProtectedRoute';
 import PublicRoute from './navigation/PublicRoute';
 import WalletDetails from './pages/WalletDetails';
+import RelatedAccounts from './pages/RelatedAccounts';
 
 function AppRoutes() {
   const location = useLocation();
@@ -100,6 +101,7 @@ function AppRoutes() {
             path="/dashboard/wallet/:blockchainName/:walletAddress"
             element={<WalletDetails />}
           />
+          <Route path="/wallets/:walletAddress/related" element={<RelatedAccounts />} />
           <Route path="/settings/account" element={<Account />} />
         </Route>
         {/* <Route path="/dashboard/analytics" element={<Analytics />} />
