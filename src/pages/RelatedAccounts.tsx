@@ -6,6 +6,7 @@ import Header from '../partials/Header';
 import { useRelatedAccounts } from '../hooks/useRelatedAccounts';
 import { convertToReadableFormat, toFixed } from '../utils/Utils';
 import WebTable from '../components/WebTable';
+import Image01 from '../images/icon-01.svg';
 
 let ignoreSignalColumns = ['flag'];
 
@@ -18,10 +19,21 @@ const RelatedAccounts = () => {
     const commonCol = [
       {
         name: 'hash',
-        label: 'Address',
+        label: 'Wallet Address',
         options: {
           customBodyRender: (hash_attrs: object) => {
-            return <div className="text-center cursor-pointer" onClick={() => {navigate(`/dashboard/wallet/${hash_attrs.blokchain_name}/${hash_attrs.hash}/`);}}>{hash_attrs.hash}</div>;
+            return (
+              <div className="flex flex-row items-center -m-1.5 cursor-pointer" onClick={() => {navigate(`/dashboard/wallet/${hash_attrs.blokchain_name}/${hash_attrs.hash}/`);}}>
+                <div className="flex items-center text-slate-800">
+                  <div className="w-10 h-10 shrink-0 flex items-center justify-center bg-slate-100 rounded-full mr-2 sm:mr-3">
+                    <img className="ml-1" src={Image01} width="20" height="20" />
+                  </div>
+                </div>
+                <div className="text-left">
+                  <span>{hash_attrs.hash}</span>
+                </div>
+              </div>
+            );
           }
         }
       },
