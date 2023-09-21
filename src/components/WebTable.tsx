@@ -73,7 +73,7 @@ function WebTable(props: WebTableProps) {
       }
       data={data}
       columns={buildColumns(columns)}
-      options={options}
+      options={{ ...options, responsive: 'standard' }}
     />
   );
 }
