@@ -30,9 +30,9 @@ const AccountPanel: React.FC = () => {
           {/* Right */}
           <div className="text-sm text-slate-800ml-4">
             <span className="mr-3">{item.value}</span>
-            <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">
+            {/* <a className="font-medium text-indigo-500 hover:text-indigo-600" href="#0">
               Edit
-            </a>
+            </a> */}
           </div>
         </li>
       );
@@ -57,7 +57,7 @@ const AccountPanel: React.FC = () => {
                 alt="User upload"
               />
             </div>
-            <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Change</button>
+            {/* <button className="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Change</button> */}
           </div>
         </section>
         <ul>
