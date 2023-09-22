@@ -68,7 +68,7 @@ function WebTable(props: WebTableProps) {
             <Spinner />
           </div>
         ) : (
-          title
+          <p className="break-all md:break-normal">{title}</p>
         )
       }
       data={data}
