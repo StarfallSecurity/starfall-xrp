@@ -56,10 +56,12 @@ const WalletDetails: React.FC = () => {
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               {/* Left: Title */}
               <div className="mb-4 sm:mb-0">
-                <h1 className="text-2xl md:text-3xl text-slate-800 font-bold">{walletAddress}</h1>
+                <h1 className="text-2xl md:text-3xl break-all md:break-normal text-slate-800 font-bold">
+                  {walletAddress}
+                </h1>
                 <div
                   onClick={navToRelatedAccounts}
-                  className={`text-xs inline-flex cursor-pointer font-medium rounded-full text-center px-2.5 py-1 bg-blue-100 text-blue-600`}
+                  className={`text-xs inline-flex cursor-pointer font-medium rounded-full text-center px-2.5 py-1 my-3 md:my-0 bg-blue-100 text-blue-600`}
                 >
                   Related
                 </div>
