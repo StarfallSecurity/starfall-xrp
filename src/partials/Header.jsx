@@ -55,6 +55,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
                   <option value="arbitrum">ARBITRUM</option>
                   <option value="polygon">POLYGON</option>
                   <option value="linea">LINEA</option>
+                  <option value="XRP">XRP</option>
                 </select>
               </div>
             </>
