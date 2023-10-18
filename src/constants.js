@@ -3,14 +3,14 @@ const envs = {
   PRODUCTION: 'PRODUCTION'
 };
 
-export const currentEnv = 'PRODUCTION';
+export const currentEnv = 'LOCAL';
 
 export const localUrl = 'http://localhost:8000/';
 export const productionUrl = 'https://starfall-backend.herokuapp.com/';
 
 export const TOKEN_KEY = 'token';
 
-export const SUPPORT_EMAIL = 'support@starfall.ai';
+export const SUPPORT_EMAIL = 'team@starfall.ai';
 
 export const getUrl = () => {
   if (currentEnv === envs.LOCAL) {
