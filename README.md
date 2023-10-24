@@ -1,26 +1,30 @@
-# Mosaic React
+# Starfall Implementation of XRPL
 
-React landing page template designed by Cruip.
+This is the starfall implementation of the XRPL protocol. Choose XRP in the dropdown and search any address to detect fraud and bot behavior in account. Backend connects to data.ripple.com and pulls last 100 transactions. Models detect 52 signals and determine whether there is fraudulent or bot activity in account.
+
+## Description
+
+- Connects client to xrpl protocol.
+- Choose XRP from the dropdown and enter address
+- Run fraud and bot detection models on any XRP wallet
+- Use scores to flag, suspend or approve any XRP wallet address
 
 ## Project setup
 ```
-npm install
+yarn
+yarn dev
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run dev
+yarn dev
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+yarn build
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://vitejs.dev/guide/).
+Contact rohit@starfall.ai
 
-## Support notes
-We are shipping our templates with a very basic React configuration to let you quickly get into the development process, but we don't discourage you from using any other configuration or framework built on the top of React. So, please note that any request dealing with React (e.g. extra features, customisations, et cetera) is to be considered out of the support scope.
-
-For more information about what support covers, please see our (FAQs)[https://cruip.com/faq/].
