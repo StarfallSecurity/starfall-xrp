@@ -8,6 +8,7 @@ This is the starfall implementation of the XRPL protocol. Choose XRP in the drop
 - Choose XRP from the dropdown and enter address
 - Run fraud and bot detection models on any XRP wallet
 - Use scores to flag, suspend or approve any XRP wallet address
+- Scores can be used inside of smart contracts through conditions and fulfillments
 
 ## Project setup
 ```
