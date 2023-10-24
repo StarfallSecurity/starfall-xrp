@@ -7,6 +7,7 @@ import UserMenu from '../components/DropdownProfile';
 import SearchForm from './actions/SearchForm';
 import { fetchWalletByAddress } from '../services/network/wallet';
 import { useNavigate } from 'react-router-dom';
+import { xrpl } from 'xrpl';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
@@ -35,6 +36,35 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     setIsSmallScreen(!isSmallScreen);
     setSearchModalOpen(true);
   };
+  
+  const main = async function() {
+
+    const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
+    await client.connect()
+
+    const fund_result = await client.fundWallet()
+    const test_wallet = fund_result.wallet
+    console.log(fund_result)
+  
+    const response = await client.request({
+      "command": "account_info",
+      "account": test_wallet.address,
+      "ledger_index": "validated"
+    })
+    console.log(response)
+  
+    client.request({
+      "command": "subscribe",
+      "streams": ["ledger"]
+    })
+    client.on("ledgerClosed", async (ledger) => {
+      console.log(`Ledger #${ledger.ledger_index} validated with ${ledger.txn_count} transactions!`)
+    })
+
+    await client.disconnect()
+  }
+
+  main();
 
   return (
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
