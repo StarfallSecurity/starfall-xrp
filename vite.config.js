@@ -34,12 +34,30 @@ export default defineConfig({
         replacement: (val) => {
           return val.replace(/^~/, "");
         },
-        events: 'events',
-        crypto: 'crypto-browserify',
-        stream: 'stream-browserify',
-        http: 'stream-http',
-        https: 'https-browserify',
-        ws: 'xrpl/dist/npm/client/WSWrapper',
+      },
+      {
+        find: 'events',
+        replacement: 'events',
+      },
+      {
+        find: 'crypto',
+        replacement: 'crypto-browserify',
+      },
+      {
+        find: 'stream',
+        replacement: 'stream-browserify',
+      },
+      {
+        find: 'http',
+        replacement: 'stream-http',
+      },
+      {
+        find: 'https',
+        replacement: 'https-browserify',
+      },
+      {
+        find: 'ws',
+        replacement: 'xrpl/dist/npm/client/WSWrapper',
       },
     ],
   },
