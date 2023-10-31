@@ -7,7 +7,7 @@ import UserMenu from '../components/DropdownProfile';
 import SearchForm from './actions/SearchForm';
 import { fetchWalletByAddress } from '../services/network/wallet';
 import { useNavigate } from 'react-router-dom';
-import { XrpClient } from 'xrpl';
+import { xrpl } from 'xrpl';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
