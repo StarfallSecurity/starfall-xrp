@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import SearchModal from '../components/ModalSearch';
 import Notifications from '../components/DropdownNotifications';
@@ -36,7 +36,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     setSearchModalOpen(true);
   };
   
-  const main = async function() {
+  const main = async () => {
 
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
     await client.connect()
@@ -52,18 +52,23 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     })
     console.log(response)
   
-    client.request({
-      "command": "subscribe",
-      "streams": ["ledger"]
-    })
-    client.on("ledgerClosed", async (ledger) => {
-      console.log(`Ledger #${ledger.ledger_index} validated with ${ledger.txn_count} transactions!`)
-    })
+    // client.request({
+    //   "command": "subscribe",
+    //   "streams": ["ledger"]
+    // })
+    // client.on("ledgerClosed", async (ledger) => {
+    //   console.log(`Ledger #${ledger.ledger_index} validated with ${ledger.txn_count} transactions!`)
+    // })
 
     await client.disconnect()
   }
 
-  main();
+  useEffect(() => {
+    console.log("useEffect")
+    main();
+  }, []);
+
+  
 
   return (
     <header className="sticky top-0 bg-white border-b border-slate-200 z-30">
