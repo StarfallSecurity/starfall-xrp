@@ -7,6 +7,8 @@ import UserMenu from '../components/DropdownProfile';
 import SearchForm from './actions/SearchForm';
 import { fetchWalletByAddress } from '../services/network/wallet';
 import { useNavigate } from 'react-router-dom';
+import * as crypto from 'crypto';
+import * as cc from 'five-bells-condition';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
@@ -35,15 +37,23 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     setIsSmallScreen(!isSmallScreen);
     setSearchModalOpen(true);
   };
-  
-  const main = async () => {
+
+  const addSeconds = (numOfSeconds, date = new Date()) => {
+    date.setSeconds(date.getSeconds() + numOfSeconds);
+    date = Math.floor(date / 1000)
+    date = date - 946684800
+    return date;
+  }
+
+  const main = async (condition, fulfillment_hex) => {
 
     const client = new xrpl.Client("wss://s.altnet.rippletest.net:51233")
     await client.connect()
-
+    let faucetHost = null;
     const fund_result = await client.fundWallet()
     const test_wallet = fund_result.wallet
     console.log(fund_result)
+    const my_wallet = (await client.fundWallet(null, { faucetHost })).wallet;
   
     const response = await client.request({
       "command": "account_info",
@@ -52,6 +62,7 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     })
     console.log(response)
   
+    // Don't subscribe to events.
     // client.request({
     //   "command": "subscribe",
     //   "streams": ["ledger"]
@@ -60,12 +71,118 @@ function Header({ sidebarOpen, setSidebarOpen }) {
     //   console.log(`Ledger #${ledger.ledger_index} validated with ${ledger.txn_count} transactions!`)
     // })
 
+    // Create conditional escrow.
+
+    let escrow_cancel_date = new Date()
+    escrow_cancel_date = addSeconds(parseInt(100))
+    // Send 5 XRP to the escrow. Make sure it's less than the balance.
+    const sendAmount = 5;
+
+    const escrowTx = await client.autofill({
+      "TransactionType": "EscrowCreate",
+      "Account": test_wallet.address,
+      "Amount": xrpl.xrpToDrops(sendAmount),
+      "Destination": my_wallet.address,
+      "CancelAfter": escrow_cancel_date,
+      "Condition": condition
+    });
+
+    const signed = test_wallet.sign(escrowTx)
+    const tx = await client.submitAndWait(signed.tx_blob)
+    let results = "\nSequence Number (Save!): " + JSON.stringify(tx.result.Sequence)
+    results  += "\n\nBalance changes: " + 
+    JSON.stringify(xrpl.getBalanceChanges(tx.result.meta), null, 2)
+    
+    // Here the results print out that the escrow was created.
+    // Sequence Number (Save!): 42546416
+    // Balance changes: [
+    //   {
+    //     "account": "rpiR5xPtSUkARrixBqgcyz6aWW24ip59eF",
+    //     "balances": [
+    //       {
+    //         "currency": "XRP",
+    //         "value": "-0.000012"
+    //       }
+    //     ]
+    //   }
+    // ]
+    console.log(results);
+    let standbyWalletBalance = await client.getXrpBalance(test_wallet.address)
+    let myWalletBalance = await client.getXrpBalance(my_wallet.address)
+    console.log("Standby Wallet Balance: " + standbyWalletBalance)
+    console.log("My Wallet Balance: " + myWalletBalance)
+
+    // Finish conditional escrow.
+    const prepared = await client.autofill({
+      "TransactionType": "EscrowFinish",
+      "Account": my_wallet.address,
+      "Owner": test_wallet.address,
+      "OfferSequence": parseInt(tx.result.Sequence),
+      "Condition": condition,
+      "Fulfillment": fulfillment_hex
+    })
+
+    const fsigned = my_wallet.sign(prepared)
+    const txx = await client.submitAndWait(fsigned.tx_blob)
+    results = results  += "\nBalance changes: " + 
+    JSON.stringify(xrpl.getBalanceChanges(txx.result.meta), null, 2)
+
+    // Results should show transfered balance after condition was fulfilled.
+    // Sequence Number (Save!): 42546782
+    // Balance changes: [
+    //   {
+    //     "account": "rM5B9jdyJj6TztoqnJRK1dmEwsu4P36P8S",
+    //     "balances": [
+    //       {
+    //         "currency": "XRP",
+    //         "value": "-0.000012"
+    //       }
+    //     ]
+    //   }
+    // ]
+    // Balance changes: [
+    //   {
+    //     "account": "rLrhuHRcxrGd5PeauQdJbJJbi7qThovsdw",
+    //     "balances": [
+    //       {
+    //         "currency": "XRP",
+    //         "value": "-0.000423"
+    //       }
+    //     ]
+    //   }
+    // ]
+    // Standby Wallet Balance: 9999.999988
+    // My Wallet Balance: 9999.999577
+    console.log(results);
+    standbyWalletBalance = await client.getXrpBalance(test_wallet.address)
+    myWalletBalance = await client.getXrpBalance(my_wallet.address)
+    console.log("Standby Wallet Balance: " + standbyWalletBalance)
+    console.log("My Wallet Balance: " + myWalletBalance)
+
+
     await client.disconnect()
+  }
+
+  const getConditionAndFulfillment = () => {
+  
+    const preimageData = crypto.randomBytes(32)
+    const fulfillment = new cc.PreimageSha256()
+    fulfillment.setPreimage(preimageData)
+  
+    const condition = fulfillment.getConditionBinary().toString('hex').toUpperCase()
+    console.log('Condition:', condition)
+   
+    // Keep secret until you want to finish the escrow
+    const fulfillment_hex = fulfillment.serializeBinary().toString('hex').toUpperCase()
+    console.log('Fulfillment:', fulfillment_hex)
+    return [condition, fulfillment_hex]
   }
 
   useEffect(() => {
     console.log("useEffect")
-    main();
+    const [condition, fulfillment_hex] = getConditionAndFulfillment();
+    main(condition, fulfillment_hex);
+    
   }, []);
 
   
