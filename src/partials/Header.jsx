@@ -9,6 +9,7 @@ import { fetchWalletByAddress } from '../services/network/wallet';
 import { useNavigate } from 'react-router-dom';
 import * as crypto from 'crypto';
 import * as cc from 'five-bells-condition';
+import { Buffer } from 'buffer';
 
 function Header({ sidebarOpen, setSidebarOpen }) {
   const navigate = useNavigate();
@@ -165,14 +166,17 @@ function Header({ sidebarOpen, setSidebarOpen }) {
 
   const getConditionAndFulfillment = () => {
   
+    // Starfall to generate the hash telling whether the account should be blacklisted or not and generates the condition.
     const preimageData = crypto.randomBytes(32)
     const fulfillment = new cc.PreimageSha256()
-    fulfillment.setPreimage(preimageData)
+    fulfillment.setPreimage(new Buffer('rLrhuHRcxrGd5PeauQdJbJJbi7qThovsdw failed blacklist validation'))
   
     const condition = fulfillment.getConditionBinary().toString('hex').toUpperCase()
     console.log('Condition:', condition)
    
-    // Keep secret until you want to finish the escrow
+    // Here the fulfillment should be fetched through the xprl hooks api. Then the serialized fulfillment should be used to finish the escrow.
+    // We pass it in manually here.
+    // https://hooks.xrpl.org/
     const fulfillment_hex = fulfillment.serializeBinary().toString('hex').toUpperCase()
     console.log('Fulfillment:', fulfillment_hex)
     return [condition, fulfillment_hex]
